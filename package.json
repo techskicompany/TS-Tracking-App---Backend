@@ -1,0 +1,16 @@
+{
+  "name": "client-node.js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "Apache",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mqtt": "^4.3.7",
+    "mysql2": "^3.14.1",
+    "socket.io": "^4.8.1"
+  }
+}
