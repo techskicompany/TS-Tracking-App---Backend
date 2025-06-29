@@ -6,10 +6,10 @@ const mqtt = require('mqtt');
 
 
 const dbConfig={
-    host:'localhost',
-    user:'root',
-    password:'',
-    database:'techski_db'
+    host:'sql3.freesqldatabase.com',
+    user:'sql3787306',
+    password:'YLq5zEs9NP',
+    database:'sql3787306'
 }
 const pool = mysql.createPool(dbConfig);
 
