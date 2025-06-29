@@ -2,8 +2,11 @@ const http = require('http');
 const Socket = require('socket.io');
 const express= require('express');
 const cors = require('cors');
+const { connectOptions } = require('./use_mqtt.js');
+const mqtt = require('mqtt');
 
-const {pool,client} = require('./connect.js')
+
+const {pool} = require('./connect.js')
 
 var isServerRunning= false;
 
@@ -31,6 +34,31 @@ app.post("/login",async (req,res)=>{
     const [devices] = await pool.query('SELECT * FROM customer_devices WHERE customer_id=?',[user.id]);
  
     
+    
+    /**
+    * MQTT Broker options
+    */
+    const clientId = 'tech_ski_tracking_' + Math.random().toString(16).substring(2, 8)
+    const options = {
+      clientId,
+      clean: true,
+      connectTimeout: 4000,
+      username: 'emqx_test',
+      password: 'emqx_test',
+      reconnectPeriod: 1000,
+    }
+
+    const { protocol, host, port } = connectOptions
+
+    let connectUrl = `${protocol}://${host}:${port}`
+    if (['ws', 'wss'].includes(protocol)) {
+       connectUrl += '/mqtt'
+    }
+    /**
+    * MQTT Broker connection
+    */
+    const client = mqtt.connect(connectUrl, options)
+
 
     const deviceStates = new Map();
     devices.forEach(device=>{
