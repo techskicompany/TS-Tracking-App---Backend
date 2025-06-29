@@ -8,7 +8,7 @@ const {pool,client} = require('./connect.js')
 var isServerRunning= false;
 
 const app=express();
-const serverPort=3000;
+const PORT = process.env.PORT || 3000;
 const server = http.createServer(app)
 const io = new Socket.Server(server,{cors:{origin:'*'}});
 
@@ -74,9 +74,9 @@ app.post("/login",async (req,res)=>{
         }        
         
         if(!isServerRunning){
-          server.listen(3000,()=>{
+          server.listen(PORT,()=>{
             isServerRunning=true;
-            console.log("API running at: http://localhost:3000");
+            console.log("API running at "+PORT);
           });
         }
     
@@ -190,9 +190,9 @@ io.on('connection',(socket)=>{
 
 
 
-server.listen(serverPort,()=>{
+server.listen(PORT,()=>{
   isServerRunning=true;
-  console.log("Server running at http://localhost:"+serverPort);
+  console.log("Server running at "+PORT);
   
 })
 
